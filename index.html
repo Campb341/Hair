@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hair-lytic</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
   <style>
@@ -15,9 +15,10 @@
     }
 
     h1 {
-      font-size: 64px;
+      font-size: 56px;
       color: #5d3b8c;
       margin-bottom: 0;
+      font-weight: 500;
       font-style: normal;
     }
 
@@ -32,10 +33,11 @@
     .form-container {
       background: #ffffff;
       padding: 40px;
-      max-width: 500px;
+      max-width: 420px;
       margin: auto;
       border-radius: 20px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      position: relative;
     }
 
     label {
@@ -45,40 +47,6 @@
       margin-bottom: 6px;
       font-weight: 600;
       font-size: 16px;
-    }
-
-    .dropdown-section {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      color: #5d3b8c;
-      font-weight: 500;
-    }
-
-    .chevron {
-      transition: transform 0.3s ease;
-      font-size: 20px;
-    }
-
-    .rotate {
-      transform: rotate(180deg);
-    }
-
-    .dropdown-content {
-      max-height: 0;
-      overflow: hidden;
-      text-align: left;
-      transition: max-height 0.4s ease, opacity 0.4s ease;
-      opacity: 0;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .dropdown-content.open {
-      max-height: 1000px;
-      opacity: 1;
     }
 
     select, input[type="text"] {
@@ -120,6 +88,65 @@
       white-space: pre-wrap;
       text-align: left;
     }
+
+    .loading {
+      color: #5d3b8c;
+      font-style: italic;
+    }
+
+    .error-message {
+      color: #d32f2f;
+      background-color: #fde8e8;
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 4px solid #d32f2f;
+    }
+
+    .info-toggle {
+      font-size: 14px;
+      font-weight: 600;
+      color: #5d3b8c;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .chevron {
+      width: 18px;
+      height: 18px;
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .info-box {
+      background: #f9f6ff;
+      color: #333;
+      font-size: 14px;
+      text-align: left;
+      padding: 16px;
+      margin-top: 10px;
+      border-left: 4px solid #5d3b8c;
+      border-radius: 8px;
+      display: none;
+      overflow-y: auto;
+      max-height: 300px;
+    }
+
+    .info-box.show {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .info-toggle {
+        margin-bottom: 16px;
+      }
+
+      select, input {
+        margin-top: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -128,46 +155,47 @@
 
   <div class="form-container">
     <form id="hairForm">
-      <label for="hair-type">Hair Type
-        <span class="dropdown-section" onclick="toggleDropdown('type-info')">
-          What's my hair type?
-          <span id="chevron-type" class="chevron">&#9660;</span>
-        </span>
-      </label>
-      <select id="hair-type" name="hair-type">
-        <option>4C</option><option>4B</option><option>4A</option>
-        <option>3C</option><option>3B</option><option>3A</option>
-        <option>2C</option><option>2B</option><option>2A</option>
-        <option>1C</option><option>1B</option><option>1A</option>
-      </select>
-      <div id="type-info" class="dropdown-content">
-        Your hair type is all about the shape or pattern of your strands—whether it's coily, curly, wavy, or straight. To find yours, just wash your hair, let it air dry (no product!), and check out what it's doing:<br><br>
+      <label for="hair-type">Hair Type</label>
+      <div class="info-toggle" onclick="toggleInfo('hairInfo', this, event)">
+        What's my hair type?
+        <svg class="chevron" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.086l3.71-3.856a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div id="hairInfo" class="info-box">
         <strong>Coily (Type 4A–4C):</strong> Super tight curls or zig-zag patterns that shrink up a lot. This hair is full of texture and volume, and can feel soft, springy, or wiry depending on the strand.<br><br>
         <strong>Curly (Type 3A–3C):</strong> Defined curls that range from loose spirals to corkscrews. Curls bounce when pulled and usually have lots of volume and movement.<br><br>
         <strong>Wavy (Type 2A–2C):</strong> Has an “S” shape with some body and texture. Can be soft and loose or a bit frizzy with more defined waves.<br><br>
         <strong>Straight (Type 1A–1C):</strong> No bend or curl at all (1A) to very slight bends or body (1C). Smooth and shiny, this hair lies flat against the scalp.<br><br>
         <em>You might be a mix of types - if you'd like a visual - a quick google search of "what's my hair type" will help!</em>
       </div>
-
-      <label for="porosity">Porosity
-        <span class="dropdown-section" onclick="toggleDropdown('porosity-info')">
-          What's my hair porosity?
-          <span id="chevron-porosity" class="chevron">&#9660;</span>
-        </span>
-      </label>
-      <select id="porosity" name="porosity">
-        <option>Low</option><option>Medium</option><option>High</option>
+      <select id="hair-type" name="hair-type">
+        <option>4C</option><option>4B</option><option>4A</option><option>3C</option><option>3B</option><option>3A</option>
+        <option>2C</option><option>2B</option><option>2A</option><option>1C</option><option>1B</option><option>1A</option>
       </select>
-      <div id="porosity-info" class="dropdown-content">
+
+      <label for="porosity">Porosity</label>
+      <div class="info-toggle" onclick="toggleInfo('porosityInfo', this, event)">
+        What's my hair porosity?
+        <svg class="chevron" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.086l3.71-3.856a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div id="porosityInfo" class="info-box">
         Porosity is how well your hair absorbs and holds onto moisture. Try this quick test when you have a chance:<br><br>
         Grab a clean strand of hair (freshly washed, no products). Drop it in a glass of water.<br><br>
         <strong>Floats?</strong> You’ve got low porosity – your hair takes longer to absorb products.<br><br>
         <strong>Sinks slowly?</strong> That’s medium porosity – your hair takes in moisture at a balanced rate.<br><br>
         <strong>Sinks fast?</strong> That's high porosity – your hair absorbs moisture quickly but also loses it fast, so hydration is key.
       </div>
+      <select id="porosity" name="porosity">
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+      </select>
 
       <label for="product">Product Name or Ingredient(s)</label>
-      <input type="text" id="product" name="product" placeholder="Pureology or Glycerin" />
+      <input type="text" id="product" name="product" placeholder="Pureology or Glycerin"/>
 
       <button type="submit">CHECK THIS PRODUCT</button>
     </form>
@@ -179,12 +207,75 @@
   </div>
 
   <script>
-    function toggleDropdown(id) {
-      const content = document.getElementById(id);
-      const chevron = document.getElementById('chevron-' + id.split('-')[0]);
-      content.classList.toggle('open');
-      chevron.classList.toggle('rotate');
+    function toggleInfo(id, toggleBtn, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      const allBoxes = document.querySelectorAll('.info-box');
+      const info = document.getElementById(id);
+      const chevron = toggleBtn.querySelector('svg');
+
+      // Only toggle the clicked one
+      const isOpen = info.classList.contains('show');
+      info.classList.toggle('show');
+      chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('hairForm');
+      const resultBox = document.getElementById('result');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '<div class="loading">Analyzing your hair product...</div>';
+
+        const hairType = document.getElementById('hair-type').value;
+        const porosity = document.getElementById('porosity').value;
+        const product = document.getElementById('product').value;
+
+        try {
+          const response = await fetch('https://hook.us2.make.com/awhvyk3vj3le4dcblqsap4rt4296rwcm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hairType, porosity, product })
+          });
+
+          const rawText = await response.text();
+
+          let data;
+          try {
+            const sanitizedJson = rawText
+              .replace(/\n/g, '\\n')
+              .replace(/\r/g, '\\r')
+              .replace(/\t/g, '\\t');
+            data = JSON.parse(sanitizedJson);
+          } catch (e) {
+            const replyMatch = rawText.match(/"reply"\s*:\s*"([^"]*)"/i);
+            if (replyMatch) {
+              data = { reply: replyMatch[1] };
+            } else {
+              throw new Error("Couldn't parse server response");
+            }
+          }
+
+          if (!data.reply) throw new Error("The analysis couldn't be generated");
+
+          resultBox.innerHTML = data.reply.replace(/\\n/g, '<br>');
+
+        } catch (error) {
+          resultBox.innerHTML = `
+            <div class="error-message">
+              <strong>Error:</strong> ${error.message}<br><br>
+              <small>Please try again or contact support</small>
+            </div>
+          `;
+        }
+      });
+    });
   </script>
 </body>
 </html>
