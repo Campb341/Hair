@@ -40,17 +40,17 @@
       color: #f1f1f1;
     }
 
-    /* Main form container with retro-zine style */
+    /* Main form container with straight style */
     .form-container {
       background: #ffffff;
       padding: 40px;
       max-width: 520px;
-      margin: -40px auto 40px auto;
+      margin: 40px auto;
       border-radius: 12px;
       border: 3px solid #000;
-      transform: rotate(-1deg);
       box-shadow: 10px 10px 0 #4caf94;
       position: relative;
+      transform: rotate(0deg); /* Straightened */
     }
 
     .form-container:before {
@@ -61,7 +61,7 @@
       right: -8px;
       bottom: -8px;
       border: 2px dashed #5d3b8c;
-      transform: rotate(1deg);
+      transform: rotate(0deg); /* Straightened */
       pointer-events: none;
     }
 
@@ -192,7 +192,6 @@
       }
       .form-container {
         margin: 20px;
-        transform: none;
       }
     }
   </style>
