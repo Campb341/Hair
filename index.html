@@ -4,40 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HairHacks</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Anton&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       background: #fffaf8;
       margin: 0;
-      padding: 40px 20px;
+      padding: 0;
+      color: #222;
+    }
+
+    /* Hero Section */
+    header {
+      background: #5d3b8c;
+      color: white;
+      padding: 60px 20px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    h1 {
-      font-size: 56px;
-      color: #5d3b8c;
-      margin-bottom: 0;
-      font-weight: 500;
-      font-style: normal;
+    header h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: 72px;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: 1;
     }
 
-    p {
-      color: #555;
-      margin-top: 8px;
-      margin-bottom: 40px;
-      font-size: 20px;
+    header p {
+      margin-top: 20px;
+      font-size: 22px;
       font-style: italic;
+      color: #f1f1f1;
     }
 
+    /* Main form container with retro-zine style */
     .form-container {
       background: #ffffff;
       padding: 40px;
-      max-width: 420px;
-      margin: auto;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      max-width: 520px;
+      margin: -40px auto 40px auto;
+      border-radius: 12px;
+      border: 3px solid #000;
+      transform: rotate(-1deg);
+      box-shadow: 10px 10px 0 #4caf94;
       position: relative;
+    }
+
+    .form-container:before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border: 2px dashed #5d3b8c;
+      transform: rotate(1deg);
+      pointer-events: none;
     }
 
     label {
@@ -45,72 +70,56 @@
       text-align: left;
       margin-top: 20px;
       margin-bottom: 6px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 16px;
+      text-transform: uppercase;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 0.5px;
     }
 
     select, input[type="text"] {
       width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
+      padding: 14px;
+      border-radius: 6px;
+      border: 2px solid #000;
       font-size: 16px;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     button {
       margin-top: 30px;
       width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: none;
+      padding: 18px;
+      font-size: 20px;
+      border-radius: 6px;
+      border: 3px solid #000;
       background-color: #4caf94;
-      color: white;
-      font-weight: bold;
+      color: #000;
+      font-weight: 800;
+      font-family: 'Anton', sans-serif;
       cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 4px 4px 0 #000;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #666;
+    button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #5d3b8c;
     }
 
-    #result {
-      margin-top: 30px;
-      padding: 20px;
-      background: #f4f4f4;
-      border-radius: 10px;
-      font-size: 16px;
-      color: #333;
-      display: none;
-      white-space: pre-wrap;
-      text-align: left;
-    }
-
-    .loading {
-      color: #5d3b8c;
-      font-style: italic;
-    }
-
-    .error-message {
-      color: #d32f2f;
-      background-color: #fde8e8;
-      padding: 12px;
-      border-radius: 8px;
-      border-left: 4px solid #d32f2f;
-    }
-
+    /* Info toggles */
     .info-toggle {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: #5d3b8c;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .chevron {
@@ -122,36 +131,77 @@
 
     .info-box {
       background: #f9f6ff;
-      color: #333;
+      color: #111;
       font-size: 14px;
       text-align: left;
       padding: 16px;
       margin-top: 10px;
       border-left: 4px solid #5d3b8c;
-      border-radius: 8px;
+      border-radius: 4px;
       display: none;
-      overflow-y: auto;
-      max-height: 300px;
+      line-height: 1.5;
     }
 
     .info-box.show {
       display: block;
     }
 
-    @media (max-width: 600px) {
-      .info-toggle {
-        margin-bottom: 16px;
-      }
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #111;
+      display: none;
+      white-space: pre-wrap;
+      text-align: left;
+      font-family: monospace;
+      box-shadow: 4px 4px 0 #4caf94;
+    }
 
-      select, input {
-        margin-top: 10px;
+    .loading {
+      color: #5d3b8c;
+      font-style: italic;
+    }
+
+    .error-message {
+      color: #d32f2f;
+      background-color: #fde8e8;
+      padding: 12px;
+      border-radius: 6px;
+      border: 2px solid #000;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 60px;
+      font-size: 14px;
+      text-align: center;
+      background: #5d3b8c;
+      color: #fff;
+      padding: 20px;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 48px;
+      }
+      .form-container {
+        margin: 20px;
+        transform: none;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Hair Hacks</h1>
-  <p>Guess no more and see if a product is good for your hair.</p>
+  <header>
+    <h1>Hair Hacks</h1>
+    <p>Guess no more and see if a product is good for your hair.</p>
+  </header>
 
   <div class="form-container">
     <form id="hairForm">
@@ -197,7 +247,7 @@
       <label for="product">Product Name or Ingredient(s)</label>
       <input type="text" id="product" name="product" placeholder="Pureology or Glycerin"/>
 
-      <button type="submit">CHECK THIS PRODUCT</button>
+      <button type="submit">Check This Product</button>
     </form>
     <div id="result"></div>
   </div>
@@ -212,12 +262,8 @@
         event.preventDefault();
         event.stopPropagation();
       }
-
-      const allBoxes = document.querySelectorAll('.info-box');
       const info = document.getElementById(id);
       const chevron = toggleBtn.querySelector('svg');
-
-      // Only toggle the clicked one
       const isOpen = info.classList.contains('show');
       info.classList.toggle('show');
       chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
@@ -229,7 +275,6 @@
 
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
-
         resultBox.style.display = 'block';
         resultBox.innerHTML = '<div class="loading">Analyzing your hair product...</div>';
 
