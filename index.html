@@ -4,8 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hair Product Checker</title>
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Anton&display=swap" rel="stylesheet">
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=773408075074752&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-58BP45FXWM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+  </script>
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -40,7 +65,7 @@
       color: #f1f1f1;
     }
 
-    /* Main form container with straight style */
+    /* Main form container */
     .form-container {
       background: #ffffff;
       padding: 40px;
@@ -50,7 +75,6 @@
       border: 3px solid #000;
       box-shadow: 10px 10px 0 #4caf94;
       position: relative;
-      transform: rotate(0deg); /* Straightened */
     }
 
     .form-container:before {
@@ -61,7 +85,6 @@
       right: -8px;
       bottom: -8px;
       border: 2px dashed #5d3b8c;
-      transform: rotate(0deg); /* Straightened */
       pointer-events: none;
     }
 
@@ -186,13 +209,36 @@
       letter-spacing: 1px;
     }
 
+    /* Cookie banner */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #222;
+      color: #fff;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      z-index: 9999;
+    }
+    #cookie-banner button {
+      margin-left: 10px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #accept-cookies { background: #4caf94; color: #000; }
+    #decline-cookies { background: #d32f2f; color: #fff; }
+
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 48px;
-      }
-      .form-container {
-        margin: 20px;
-      }
+      header h1 { font-size: 48px; }
+      .form-container { margin: 20px; }
+      #cookie-banner { flex-direction: column; gap: 10px; text-align: center; }
     }
   </style>
 </head>
@@ -252,10 +298,20 @@
   </div>
 
   <div class="footer">
-    Powered by AI, built for textured hair
+    Hair Product Checker © 2025
+  </div>
+
+  <!-- Cookie Banner -->
+  <div id="cookie-banner">
+    <span>We use cookies for analytics and ads. Do you accept?</span>
+    <div>
+      <button id="accept-cookies">Accept</button>
+      <button id="decline-cookies">Decline</button>
+    </div>
   </div>
 
   <script>
+    // Toggle Info Boxes
     function toggleInfo(id, toggleBtn, event) {
       if (event) {
         event.preventDefault();
@@ -268,6 +324,7 @@
       chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
     }
 
+    // Form logic
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('hairForm');
       const resultBox = document.getElementById('result');
@@ -319,6 +376,39 @@
           `;
         }
       });
+
+      // Cookie Banner
+      const cookieBanner = document.getElementById('cookie-banner');
+      const acceptBtn = document.getElementById('accept-cookies');
+      const declineBtn = document.getElementById('decline-cookies');
+
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        enableTracking();
+        cookieBanner.style.display = 'none';
+      } else if (localStorage.getItem('cookieConsent') === 'declined') {
+        cookieBanner.style.display = 'none';
+      }
+
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        enableTracking();
+        cookieBanner.style.display = 'none';
+      });
+
+      declineBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'declined');
+        cookieBanner.style.display = 'none';
+      });
+
+      function enableTracking() {
+        // Fire Meta Pixel
+        fbq('init', '773408075074752');
+        fbq('track', 'PageView');
+
+        // Fire GA4
+        gtag('js', new Date());
+        gtag('config', 'G-58BP45FXWM');
+      }
     });
   </script>
 </body>
